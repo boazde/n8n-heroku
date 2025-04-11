@@ -27,3 +27,9 @@ Refer to the [Heroku n8n tutorial](https://docs.n8n.io/hosting/server-setups/her
 If you have questions after trying the tutorials, check out the [forums](https://community.n8n.io/).
 
 If you have questions after trying the tutorials, check out the [forums](https://community.n8n.io/).
+
+add port to database connection and remove the ?..
+Database connection: postgresql://n8n_owner:***@ep-broad-truth-a56aqup3-pooler.us-east-2.aws.neon.tech:5432/n8n
+
+
+rebuild with sudo heroku container:push web -a n8n-dcg
