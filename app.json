@@ -25,22 +25,16 @@
       "value": "https://<appname>.herokuapp.com"
     },
     "DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED": {
-      "description": "SSL is required to connect to Postgres on Heroku and Neon",
+      "description": "SSL is required to connect to Neon database",
       "value": "false"
     },
     "NEON_DATABASE_URL": {
-      "description": "Neon PostgreSQL connection string. Leave empty to use the default Heroku PostgreSQL.",
+      "description": "Neon PostgreSQL connection string. You must provide this for the application to work.",
       "value": "",
-      "required": false
+      "required": true
     }
   },
   "addons": [
-    {
-      "plan": "heroku-postgresql",
-      "options": {
-        "version": "14"
-      }
-    },
     {
       "plan": "papertrail:choklad"
     }

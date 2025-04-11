@@ -8,20 +8,13 @@ parse_url() {
   eval $(echo "$1" | sed -e "s#^\(\(.*\)://\)\?\(\([^:@]*\)\(:\(.*\)\)\?@\)\?\([^/?]*\)\(/\(.*\)\)\?#${PREFIX:-URL_}SCHEME='\2' ${PREFIX:-URL_}USER='\4' ${PREFIX:-URL_}PASSWORD='\6' ${PREFIX:-URL_}HOSTPORT='\7' ${PREFIX:-URL_}DATABASE='\9'#")
 }
 
-# Check if using Neon database
-if [ -n "$NEON_DATABASE_URL" ]; then
-  echo "Using Neon database connection"
-  # prefix variables to avoid conflicts and run parse url function on arg url
-  PREFIX="N8N_DB_" parse_url "$NEON_DATABASE_URL"
-  
-  # For Neon, we need to ensure SSL mode is properly set
-  export DB_POSTGRESDB_SSL_CA="/etc/ssl/certs/ca-certificates.crt"
-else
-  # Use regular Heroku Postgres if Neon is not configured
-  echo "Using standard Heroku Postgres database connection"
-  # prefix variables to avoid conflicts and run parse url function on arg url
-  PREFIX="N8N_DB_" parse_url "$DATABASE_URL"
-fi
+# Use Neon database connection
+echo "Using Neon database connection"
+# prefix variables to avoid conflicts and run parse url function on arg url
+PREFIX="N8N_DB_" parse_url "$NEON_DATABASE_URL"
+
+# For Neon, we need to ensure SSL mode is properly set
+export DB_POSTGRESDB_SSL_CA="/etc/ssl/certs/ca-certificates.crt"
 
 echo "Database connection: $N8N_DB_SCHEME://$N8N_DB_USER:***@$N8N_DB_HOSTPORT/$N8N_DB_DATABASE"
 
